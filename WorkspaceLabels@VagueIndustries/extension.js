@@ -100,9 +100,9 @@ WorkSpaceLabel.prototype = {
         let newText = this._label.get_text();
         this._entry.set_text(newText);
 
-        // Save the old focus modes
-        this.lastFocus = global.stage.get_key_focus();
-        this.lastFocusMode = global.stage_input_mode;
+        // Save the focus state
+        this._lastFocus = global.stage.get_key_focus();
+        this._lastFocusMode = global.stage_input_mode;
         
         // Redirect the focus
         global.stage_input_mode = Shell.StageInputMode.FOCUSED;
@@ -117,6 +117,12 @@ WorkSpaceLabel.prototype = {
         // Make the entry text match the label text
         let newText = this._entry.get_text();
         this._label.set_text(newText);
+
+        // Restore the old focus state
+        global.stage.set_key_focus(this._lastFocus);
+        global.stage_input_mode = this._lastFocusMode;
+
+        // Tell the menu to close back up.
         this.menu.close();
     },
 
