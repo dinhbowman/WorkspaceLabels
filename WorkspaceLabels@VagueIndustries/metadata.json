@@ -1,0 +1,8 @@
+{
+    "name": "Workspace Labels", 
+    "uuid": "WorkspaceLabels@VagueIndustries", 
+    "shell-version": ["3.0.2"], 
+    "url": "http://www.vagueindustries.com",
+    "description": 
+        "Add an editable workspace label to each workspace."
+}
