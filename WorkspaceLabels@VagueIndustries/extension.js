@@ -26,6 +26,7 @@ function WorkSpaceLabel() {
 WorkSpaceLabel.prototype = {
     __proto__: PanelMenu.Button.prototype,
 
+
     _init: function() {
         // Call the base class's init.
         let menuAlignment = 0.25
@@ -59,12 +60,14 @@ WorkSpaceLabel.prototype = {
         global.screen.connect_after('workspace-added', Lang.bind(this, this._updateOnAdd));
         global.screen.connect_after('workspace-removed', Lang.bind(this, this._updateOnRemove));
         global.screen.connect_after('workspace-switched', Lang.bind(this, this._updateOnSwitch));
+
+        // Initialize our focus references
+        this._lastFocus = undefined;
+        this._lastFocusMode = undefined;
     },
 
     _onButtonPress: function(actor, event) {
         global.log("ButtonPress");
-        this._entry.grab_key_focus();
-        global.stage.set_key_focus(this._entry);
         this.toggle();
         return true;
     },
@@ -96,6 +99,17 @@ WorkSpaceLabel.prototype = {
         // Make the entry text match the label text
         let newText = this._label.get_text();
         this._entry.set_text(newText);
+
+        // Save the old focus modes
+        this.lastFocus = global.stage.get_key_focus();
+        this.lastFocusMode = global.stage_input_mode;
+        
+        // Redirect the focus
+        global.stage_input_mode = Shell.StageInputMode.FOCUSED;
+        this._entry.grab_key_focus();
+        global.stage.set_key_focus(this._entry);
+
+        // Now open up the menu.
         this.menu.open();
     },
 
