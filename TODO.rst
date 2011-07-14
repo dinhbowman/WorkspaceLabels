@@ -6,6 +6,7 @@ Basics
 ======
  * Get CSS Working and make things look pretty.
  * Restore focus after leaving label entry.
+ * Global Bindings for quicker access.
 
 
 
