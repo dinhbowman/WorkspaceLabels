@@ -61,6 +61,9 @@ WorkSpaceLabel.prototype = {
         // Set the label to be responsive to <ESC> and <CR>
         this._entry.clutter_text.connect('key-press-event', Lang.bind(this, this._onKeyPressEvent));
 
+        // Update the panel label to keep in sync with the entry
+        this._entry.clutter_text.connect('text-changed', Lang.bind(this, this._onTextChanged));
+
         // When we lose focus: Close the editing window
         this._entry.clutter_text.connect('key-focus-out', Lang.bind(this, this.close));
 
@@ -93,6 +96,7 @@ WorkSpaceLabel.prototype = {
         let curIndex = global.screen.get_active_workspace().index();
 
         // Update the label
+        global.log("Sync Label: " + this.labels[curIndex]);
         this._label.set_text(this.labels[curIndex]);
     },
 
@@ -121,12 +125,14 @@ WorkSpaceLabel.prototype = {
             this.close();
             return true;
         }
+        return false;
+    },
 
+    _onTextChanged: function(actor, event) {
         // Make the entry text match the label text
         let newText = this._entry.get_text();
         this._setLabel(newText);
-
-        return false;
+        return false
     },
 
     toggle: function() {
@@ -161,9 +167,9 @@ WorkSpaceLabel.prototype = {
  
          // But if the text is blank.. leave in some char so we can find the label box...
          if (newText == "") {
-             this._label.set_text("---");
+             this._setLabel("---");
          } else {
-             this._label.set_text(newText);
+             this._setLabel(newText);
          }
 
         // Restore the old focus state
