@@ -156,9 +156,15 @@ WorkSpaceLabel.prototype = {
     },
 
     close: function() {
-        // Make the entry text match the label text
-        let newText = this._entry.get_text();
-        this._setLabel(newText);
+         // Make the entry text match the label text
+         let newText = this._entry.get_text();
+ 
+         // But if the text is blank.. leave in some char so we can find the label box...
+         if (newText == "") {
+             this._label.set_text("---");
+         } else {
+             this._label.set_text(newText);
+         }
 
         // Restore the old focus state
         // ToDo: This doesn't work!?
