@@ -1,8 +1,18 @@
-/* Example stylesheet */
-.helloworld-label {
+.workspace-label {
+    color: #F00;
+    background-color: white;
+}
+
+.workspace-layout {
+    color: #0F0;
+    background-color: red;
+
+}
+
+.workspace-entry {
     font-size: 36px;
     font-weight: bold;
-    color: #ffffff;
-    background-color: rgba(10,10,10,0.7);
+    color: #000;
+    background-color: rgba(180,180,180,0.7);
     border-radius: 5px;
 }
